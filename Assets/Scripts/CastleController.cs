@@ -1,8 +1,12 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CastleController : MonoBehaviour
 {
-    public int health = 100;
+    [SerializeField] float maxHealth = 100;
+    public float health;
+    public Slider healthBar;
+    
 
     public void DealDamageToCastle(int damage)
     {
@@ -12,6 +16,7 @@ public class CastleController : MonoBehaviour
             Debug.Log("That's gotta hurt!");
         }
         health -= damage;
+        healthBar.value = health;
         if (health <= 0)
         {
             Destroy(gameObject);
@@ -20,7 +25,9 @@ public class CastleController : MonoBehaviour
 
     void Start()
     {
-        
+        health = maxHealth;
+        healthBar.minValue = 0;
+        healthBar.maxValue = health;
     }
     void Update()
     {
