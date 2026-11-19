@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour
 {
@@ -7,10 +8,20 @@ public class EnemyController : MonoBehaviour
     public Vector3 movement;
     public EnemyPath enemyPath;
 
+    [Header("Enemy Health")]
+    [SerializeField] float maxHealth = 10;
+    public float health;
+    public Slider healthBar;
+    public Renderer[] targetRenderer;
+    private Material material;
+
     int currentPointIndex = 0;
     
     void Start()
     {
+        health = maxHealth;
+        healthBar.minValue = 0;
+        healthBar.maxValue = health;
         if (enemyPath == null)
         {
             enemyPath = FindFirstObjectByType<EnemyPath>();
@@ -38,5 +49,16 @@ public class EnemyController : MonoBehaviour
         {
             currentPointIndex++;
         }
+
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+    public void DealDamageToEnemy(int damage)
+    {
+        Debug.Log(" The enemy took " + damage + " hits ");
+        health -= damage;
+        healthBar.value = health;
     }
 }

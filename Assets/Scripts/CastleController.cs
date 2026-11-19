@@ -4,17 +4,20 @@ using UnityEngine.UI;
 
 public class CastleController : MonoBehaviour
 {
+    [Header("Castle Health")]
     [SerializeField] float maxHealth = 100;
     public float health;
     public Slider healthBar;
-    public Renderer targetRenderer;
+    public Renderer[] targetRenderer;
     private Material[] materials;
 
 
     void Awake()
     {
-        
-        materials = targetRenderer.materials;
+        materials = new Material[3];
+        materials[0] = targetRenderer[0].material;
+        materials[1] = targetRenderer[1].material;
+        materials[2] = targetRenderer[2].material;
     }
 
     public void DealDamageToCastle(int damage)
